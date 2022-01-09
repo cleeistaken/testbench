@@ -4,8 +4,6 @@
   connection: local
   become: yes
   any_errors_fatal: true
-  vars:
-    ansible_python_interpreter: /home/vmware/.python3-venv/bin/python3
   tasks:
     - name: Print the system distribution
       ansible.builtin.debug:
@@ -22,8 +20,12 @@
         state: started
         enabled: yes
 
-    - name: permit traffic in default zone for https service
+    - name: permit traffic in default zone for http/https service
       ansible.posix.firewalld:
-        service: http
         permanent: yes
+        immediate: yes
+        service: "{{ item }}"
         state: enabled
+      with_items:
+       - http
+       - https
