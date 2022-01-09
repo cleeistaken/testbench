@@ -5,7 +5,7 @@
 #
 
 echo "Install script requirements"
-yum -y install jq unzip wget
+sudo yum -y install jq unzip wget
 
 DIR_INSTALLATION="/usr/local/bin"
 DIR_TMP="/tmp"
@@ -24,7 +24,7 @@ if [[ ! -e ${TERRAFORM_BINARY_PATH} ]]; then
 
       if [ -f "$TERRAFORM_FILENAME" ]; then
          echo "Extracting the terraform binary"
-         unzip -o "${TERRAFORM_FILENAME}" -d "${TERRAFORM_BINARY_PATH}"
+         sudo unzip -o "${TERRAFORM_FILENAME}" -d "${TERRAFORM_BINARY_PATH}"
 
          echo "Remove zip file"
          rm -f "${TERRAFORM_FILENAME}"
@@ -39,9 +39,9 @@ else
 fi
 
 echo "Removing the current link '${DIR_INSTALLATION}/terraform'"
-rm -f "${DIR_INSTALLATION}/terraform"
+sudo rm -f "${DIR_INSTALLATION}/terraform"
 
 echo "Setting 'terraform' to '${TERRAFORM_BINARY_PATH}/terraform'"
-ln -f -s "${TERRAFORM_BINARY_PATH}/terraform" "${DIR_INSTALLATION}/terraform"
+sudo ln -f -s "${TERRAFORM_BINARY_PATH}/terraform" "${DIR_INSTALLATION}/terraform"
 
 echo "Done."

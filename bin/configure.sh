@@ -3,17 +3,17 @@
 #
 # Install system packages
 echo "Installing system packages"
-yum -y install git
+sudo yum -y install git
 
 #
 # Install Terraform
 echo "Installing Terraform"
-./install_terraform.sh
+#./install_terraform.sh
 
 #
 # Install Python
 echo "Installing Python"
-./install_python.sh
+#./install_python.sh
 
 #
 # Configure Python
@@ -31,10 +31,10 @@ pip install --upgrade setuptools
 
 # Install required packages"
 echo "Installing required packages"
-pip install wheel ansible jmespath netaddr 
+pip install wheel ansible jmespath netaddr firewalld
 
 # Configure the systems
 pushd ../ansible > /dev/null
-  ./run.sh
+  sudo ./run.sh
 popd > /dev/null
 echo "Done."
