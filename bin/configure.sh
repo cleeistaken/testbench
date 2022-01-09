@@ -21,6 +21,6 @@ pip install wheel ansible jmespath netaddr
 
 # Configure the systems
 pushd ../ansible > /dev/null
-  sudo ./run.sh
+  ./run.sh
 popd > /dev/null
 echo "Done."

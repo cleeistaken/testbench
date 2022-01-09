@@ -3,10 +3,31 @@
   hosts: localhost
   connection: local
   any_errors_fatal: true
+  vars:
+    dir_automation_keys: /opt/automation/keys
+    dir_templates: /var/www/html/templates
+    dir_automation: /opt/automation
+    dir_automation_config: /opt/automation/config
+    git_user: cleeistaken
+    git_token: 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
+    required_packages:
+      - net-tools
+    automation_projects:
+      - github.com/cleeistaken/automation-cassandra.git
+      - github.com/cleeistaken/automation-cockroach.git
+      - github.com/cleeistaken/automation-gfs.git
+      - github.com/cleeistaken/automation-kafka.git
+      - github.com/cleeistaken/automation-mssql-linux.git
   tasks:
     - name: Print the system distribution
       ansible.builtin.debug:
        msg: "The system distribution is {{ ansible_distribution }}"
+
+    - name: Install required packages
+      ansible.builtin.dnf:
+        name: "{{ item }}"
+        state: latest
+      loop: "{{ required_packages }}"
 
     - name: Install httpd
       ansible.builtin.dnf:
@@ -19,7 +40,7 @@
         state: started
         enabled: yes
 
-    - name: permit traffic in default zone for http/https service
+    - name: Permit traffic in default zone for http/https service
       ansible.posix.firewalld:
         permanent: yes
         immediate: yes
@@ -28,3 +49,72 @@
       with_items:
        - http
        - https
+
+    - name: Create template folder
+      ansible.builtin.file:
+        path: "{{ dir_templates }}"
+        state: directory
+        recurse: no
+        owner: root
+        group: root
+        mode: '0755'
+
+#    - name: Download templates
+#      ansible.builtin.get_url:
+#        url: "{{ item }}"
+#        dest: "{{ dir_templates }}"
+#        owner: root
+#        group: root
+#        mode: '0444'
+#      with_items:
+#        -  https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64.ova
+
+    - name: Create ssh keys folder
+      ansible.builtin.file:
+        path: "{{ dir_automation_keys }}"
+        state: directory
+        recurse: no
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Download SSH keys
+      ansible.builtin.get_url:
+        url: "{{ item }}"
+        dest: "{{ dir_automation_keys }}"
+        owner: root
+        group: root
+        mode: '0444'
+      with_items:
+        - https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64_id_rsa
+        - https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64_id_rsa.pub
+
+    - name: Create automation folder
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        recurse: no
+        owner: root
+        group: root
+        mode: '0755'
+      with_items:
+        - "{{ dir_automation }}"
+        - "{{ dir_automation_config }}"
+
+    - name: Create automation folder
+      ansible.builtin.file:
+        path: "{{ dir_automation }}/{{ item | basename | splitext | first }}"
+        state: directory
+        recurse: no
+        owner: root
+        group: root
+        mode: '0755'
+      loop: "{{ automation_projects }}"
+
+    - name: Clone automation projects
+      ansible.builtin.git:
+        repo: "https://{{ git_user }}:{{ git_token }}@{{ item }}"
+        dest: "{{ dir_automation }}/{{ item | basename | splitext | first }}"
+      loop: "{{ automation_projects }}"
+
+ 
