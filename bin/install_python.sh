@@ -38,20 +38,20 @@ pushd "${DIR_TMP}" > /dev/null
   fi
 
   echo "Extracting the contents of ${PYTHON_PACKAGE}"
-  #tar -xf "${PYTHON_PACKAGE}"
+  tar -xf "${PYTHON_PACKAGE}"
 
   echo "Remove python source package"
-  #rm -f "${PYTHON_PACKAGE}"
+  rm -f "${PYTHON_PACKAGE}"
 
   pushd "${PYTHON_VERSION}" > /dev/null
     echo "Configure python build"
-    #./configure --enable-optimizations  
+    ./configure --enable-optimizations  
 
     echo "Build and compile"
-    #make -j 4
+    make -j 4
 
     echo "Install python to alternate location"
-    #sudo make altinstall
+    sudo make altinstall
 
     PYTHON_LOCATION="$(dirname $(which python${VERSION_SHORT}))"
 
