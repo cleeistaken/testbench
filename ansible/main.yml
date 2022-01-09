@@ -2,7 +2,6 @@
 - name: Configure the local system
   hosts: localhost
   connection: local
-  become: yes
   any_errors_fatal: true
   tasks:
     - name: Print the system distribution
