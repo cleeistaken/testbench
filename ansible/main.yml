@@ -1,0 +1,13 @@
+---
+- name: Configure the local system
+  hosts: localhost
+  any_errors_fatal: true
+  tasks:
+    - name: Print the system distribution
+      ansible.builtin.debug:
+       msg: "The system distribution is {{ ansible_distribution }}"
+
+    - name: Install httpd
+      ansible.builtin.dnf:
+        name: httpd
+        state: latest
