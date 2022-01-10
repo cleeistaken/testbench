@@ -9,7 +9,7 @@
     dir_automation: /opt/automation
     dir_automation_config: /opt/automation/config
     git_user: cleeistaken
-    git_token: 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
+    git_token: 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
     required_packages:
       - net-tools
     automation_projects:
