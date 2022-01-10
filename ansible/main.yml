@@ -17,7 +17,16 @@
       - github.com/cleeistaken/automation-cockroach.git
       - github.com/cleeistaken/automation-gfs.git
       - github.com/cleeistaken/automation-kafka.git
-      - github.com/cleeistaken/automation-mssql-linux.git
+      - github.com/cleeistaken/automation-mssql-linux.git 
+    automation_template:
+      - https://storage.googleapis.com/workload-automation/templates/centos8.4_x64.ova
+      - https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64.ova
+    automation_template_keys:
+      - https://storage.googleapis.com/workload-automation/templates/centos8.4_x64_id_rsa
+      - https://storage.googleapis.com/workload-automation/templates/centos8.4_x64_id_rsa.pub
+      - https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64_id_rsa
+      - https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64_id_rsa.pub
+  
   tasks:
     - name: Print the system distribution
       ansible.builtin.debug:
@@ -59,15 +68,14 @@
         group: root
         mode: '0755'
 
-#    - name: Download templates
-#      ansible.builtin.get_url:
-#        url: "{{ item }}"
-#        dest: "{{ dir_templates }}"
-#        owner: root
-#        group: root
-#        mode: '0444'
-#      with_items:
-#        -  https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64.ova
+    - name: Download templates
+      ansible.builtin.get_url:
+        url: "{{ item }}"
+        dest: "{{ dir_templates }}"
+        owner: root
+        group: root
+        mode: '0444'
+      loop: "{{ automation_template }}"
 
     - name: Create ssh keys folder
       ansible.builtin.file:
@@ -85,9 +93,7 @@
         owner: root
         group: root
         mode: '0444'
-      with_items:
-        - https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64_id_rsa
-        - https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64_id_rsa.pub
+      loop: "{{ automation_template_keys }}"
 
     - name: Create automation folder
       ansible.builtin.file:
