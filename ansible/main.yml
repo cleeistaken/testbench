@@ -95,7 +95,7 @@
         dest: "{{ dir_automation_keys }}"
         owner: root
         group: root
-        mode: '0444'
+        mode: '0400'
       loop: "{{ automation_template_keys }}"
 
     - name: Create automation folder
