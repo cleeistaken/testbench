@@ -9,8 +9,8 @@
     dir_automation: /opt/automation
     dir_automation_config: /opt/automation/config
     dir_centos_dlm: /var/www/html/dlm
-    git_user: cleeistaken
-    git_token: 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
+    git_user: 
+    git_token: 
     required_packages:
       - net-tools
     automation_projects:
@@ -95,7 +95,7 @@
         dest: "{{ dir_automation_keys }}"
         owner: root
         group: root
-        mode: '0444'
+        mode: '0400'
       loop: "{{ automation_template_keys }}"
 
     - name: Create automation folder
