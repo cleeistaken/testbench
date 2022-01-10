@@ -8,6 +8,7 @@
     dir_templates: /var/www/html/templates
     dir_automation: /opt/automation
     dir_automation_config: /opt/automation/config
+    dir_centos_dlm: /var/www/html/dlm
     git_user: cleeistaken
     git_token: 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
     required_packages:
@@ -26,7 +27,9 @@
       - https://storage.googleapis.com/workload-automation/templates/centos8.4_x64_id_rsa.pub
       - https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64_id_rsa
       - https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64_id_rsa.pub
-  
+    centos_dlm_files:
+      - https://storage.googleapis.com/workload-automation/dlm/dlm-4.1.0-1.el8.src.rpm
+      - https://storage.googleapis.com/workload-automation/dlm/dlm-4.1.0-1.el8.x86_64.rpm
   tasks:
     - name: Print the system distribution
       ansible.builtin.debug:
@@ -123,4 +126,24 @@
         dest: "{{ dir_automation }}/{{ item | basename | splitext | first }}"
       loop: "{{ automation_projects }}"
 
+    #
+    # CentOS DLM
+    #
+    - name: Create CentOS DLM folder
+      ansible.builtin.file:
+        path: "{{ dir_centos_dlm }}"
+        state: directory
+        recurse: no
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Download patched CentOS DLM packages
+      ansible.builtin.get_url:
+        url: "{{ item }}"
+        dest: "{{ dir_centos_dlm }}"
+        owner: root
+        group: root
+        mode: '0444'
+      loop: "{{ centos_dlm_files }}"
  
