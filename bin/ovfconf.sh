@@ -27,7 +27,7 @@ OVF_SYS_ROOT_PASSWORD=$(${VMTOOLS_CMD} --cmd 'info-get guestinfo.ovfEnv' | grep 
 ##################################
 ### Root password              ###
 ##################################
-if [ -z "{OVF_SYS_ROOT_PASSWORD}" ]; then
+if [ ! -z "${OVF_SYS_ROOT_PASSWORD}" ]; then
   echo "Setting root password"
   echo "${OVF_SYS_ROOT_PASSWORD}" | passwd --stdin root
 fi
