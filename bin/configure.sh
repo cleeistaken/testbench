@@ -4,11 +4,9 @@
 echo "Installing Terraform"
 ./install_terraform.sh
 
-#
 # Install Python
 echo "Installing Python3"
 yum -y install python3
-
 
 # Upgrade python packages
 echo "Upgrading pip and setuptools"

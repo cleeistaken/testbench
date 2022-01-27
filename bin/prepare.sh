@@ -32,6 +32,12 @@ yum clean all
 echo "Deleting results..."
 rm -rf /var/www/html/results/*
 
+# Remove all log files
+echo "Deleting log files..."
+find /var/log -type f -delete
+find /var/log -type f -regex ".*\.gz$" -delete
+find /var/log -type f -regex ".*\.[0-9]$" -delete
+
 echo "Trimming disk space"
 fstrim /
 
