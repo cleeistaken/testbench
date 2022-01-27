@@ -101,8 +101,3 @@ fi
 # Configuration has run
 date >"${OVFCONF_RAN}"
 echo "Done"
-<<<<<<< HEAD
-q
-=======
-
->>>>>>> 9b3e9ac09165d05eed3e17a77c1f4df99d173d41
