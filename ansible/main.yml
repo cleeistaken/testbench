@@ -14,17 +14,10 @@
     required_packages:
       - net-tools
     automation_projects:
-      - github.com/cleeistaken/automation-cassandra.git
-      - github.com/cleeistaken/automation-cockroach.git
-      - github.com/cleeistaken/automation-gfs.git
-      - github.com/cleeistaken/automation-kafka.git
       - github.com/cleeistaken/automation-mssql-linux.git 
     automation_template:
-      - https://storage.googleapis.com/workload-automation/templates/centos8.4_x64.ova
-      - https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64.ova
+      - https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64_hw14.ova
     automation_template_keys:
-      - https://storage.googleapis.com/workload-automation/templates/centos8.4_x64_id_rsa
-      - https://storage.googleapis.com/workload-automation/templates/centos8.4_x64_id_rsa.pub
       - https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64_id_rsa
       - https://storage.googleapis.com/workload-automation/templates/ubuntu20.04.03_x64_id_rsa.pub
     centos_dlm_files:
