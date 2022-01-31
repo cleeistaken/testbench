@@ -41,6 +41,7 @@ rm -rf /var/www/html/results/*
 echo "Removing configuration files..."
 rm -f ~/*.yml
 rm -f ~/*.tfvars
+rm -f ~/.gifconfig
 
 # Remove all log files
 echo "Deleting log files..."
