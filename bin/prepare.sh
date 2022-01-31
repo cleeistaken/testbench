@@ -31,7 +31,7 @@ fi
 
 # Clean repository
 echo "Clean yum repository"
-yum clean all
+dnf clean all
 
 # Remove results
 echo "Deleting results..."
