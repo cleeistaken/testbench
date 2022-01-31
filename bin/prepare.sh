@@ -39,8 +39,8 @@ rm -rf /var/www/html/results/*
 
 # Remove config files
 echo "Removing configuration files..."
-rm ~/*.yml
-rm ~/*.tfvars
+rm -f ~/*.yml
+rm -f ~/*.tfvars
 
 # Remove all log files
 echo "Deleting log files..."
