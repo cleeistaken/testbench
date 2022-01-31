@@ -18,13 +18,13 @@ rm /var/lib/dbus/machine-id
 ln -s /etc/machine-id /var/lib/dbus/machine-id
 
 # Bash history
-if test -f "${BASH_HISTORY_FILE}"; then
+if [ -f "${BASH_HISTORY_FILE}" ]; then
   echo "Deleting bash history"
   rm -f "${BASH_HISTORY_FILE}"
 fi
 
 # SSH known hosts
-if test -f "${SSH_KNOWN_HOSTS_FILE}"; then
+if [ -f "${SSH_KNOWN_HOSTS_FILE}" ]; then
   echo "Deleting known hosts"
   rm -f "${SSH_KNOWN_HOSTS_FILE}"
 fi
