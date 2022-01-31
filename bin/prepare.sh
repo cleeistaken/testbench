@@ -37,6 +37,11 @@ dnf clean all
 echo "Deleting results..."
 rm -rf /var/www/html/results/*
 
+# Remove config files
+echo "Removing configuration files..."
+rm ~/*.yml
+rm ~/*.tfvars
+
 # Remove all log files
 echo "Deleting log files..."
 find /var/log -type f -delete
