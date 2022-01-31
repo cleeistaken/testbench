@@ -5,7 +5,7 @@ OVFCONF_SVC_FILE="/usr/lib/systemd/system/ovfconf.service"
 cat > "${OVFCONF_SVC_FILE}" << __OVFCONF_SERVICE__
 [Unit]
 Description=Service to configure the system using the ovf environment
-After=vmtoolsd.service
+After=vmtoolsd.service NetworkManager.service
 
 [Service]
 Type=simple
