@@ -28,7 +28,8 @@ OVF_NET_IPV4_CIDR=$(echo ${OVF_NET_IPV4_NETMASK} | awk -F. '{ split($0, octets);
 ##################################
 ### Root password              ###
 ##################################
-if [ -z "{OVF_SYS_ROOT_PASSWORD}" ]; then
+# https://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
+if [ ! -z "${OVF_SYS_ROOT_PASSWORD+x}" ]; then
   echo "Setting root password"
   echo "${OVF_SYS_ROOT_PASSWORD}" | passwd --stdin root
 fi
