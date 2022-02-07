@@ -10,6 +10,7 @@ sudo yum -y install jq unzip wget
 DIR_INSTALLATION="/usr/local/bin"
 DIR_TMP="/tmp"
 
+TERRAFORM_BINARY="terraform"
 TERRAFORM_RELEASE_LATEST=$(curl -s https://api.github.com/repos/hashicorp/terraform/releases/latest | jq --raw-output '.tag_name' | cut -c 2-)
 TERRAFORM_FILENAME="terraform_${TERRAFORM_RELEASE_LATEST}_linux_amd64.zip"
 TERRAFORM_VERSION="terraform_${TERRAFORM_RELEASE_LATEST}"
@@ -38,10 +39,10 @@ else
      echo "Latest Terraform is already installed."
 fi
 
-echo "Removing the current link '${DIR_INSTALLATION}/terraform'"
-sudo rm -f "${DIR_INSTALLATION}/terraform"
+echo "Removing the current link '${DIR_INSTALLATION}/${TERRAFORM_BINARY}'"
+sudo rm -f "${DIR_INSTALLATION}/${TERRAFORM_BINARY}"
 
-echo "Setting 'terraform' to '${TERRAFORM_BINARY_PATH}/terraform'"
-sudo ln -f -s "${TERRAFORM_BINARY_PATH}/terraform" "${DIR_INSTALLATION}/terraform"
+echo "Setting '${TERRAFORM_BINARY}' to '${TERRAFORM_BINARY_PATH}/${TERRAFORM_BINARY}'"
+sudo ln -f -s "${TERRAFORM_BINARY_PATH}/${TERRAFORM_BINARY}" "${DIR_INSTALLATION}/${TERRAFORM_BINARY}"
 
 echo "Done."
