@@ -6,8 +6,8 @@
 #
 
 OVFCONF_RAN="/etc/ovfconf"
-SSH_KNOWN_HOSTS_FILE="~/.ssh/known_hosts"
-BASH_HISTORY_FILE="~/.bash_history"
+SSH_KNOWN_HOSTS_FILE="/root/.ssh/known_hosts"
+BASH_HISTORY_FILE="/root/.bash_history"
 
 #
 # VMware KB 82228
@@ -21,13 +21,13 @@ if [ -f /var/lib/dbus/machine-id ]; then
 fi
 
 # Bash history
-if [ -f "${BASH_HISTORY_FILE}" ]; then
+if [ -f ${BASH_HISTORY_FILE} ]; then
   echo "Deleting bash history"
   rm -f "${BASH_HISTORY_FILE}"
 fi
 
 # SSH known hosts
-if [ -f "${SSH_KNOWN_HOSTS_FILE}" ]; then
+if [ -f ${SSH_KNOWN_HOSTS_FILE} ]; then
   echo "Deleting known hosts"
   rm -f "${SSH_KNOWN_HOSTS_FILE}"
 fi
