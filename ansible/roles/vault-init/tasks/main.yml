@@ -53,8 +53,7 @@
 
 - name: Foo
   debug:
-    msg: "{{ item.stdout }}"
-  with_items: "{{ unseal_keys.results }}"
+    var: unseal_keys
 
 - name: Unseal vault with unseal keys
   shell: |
