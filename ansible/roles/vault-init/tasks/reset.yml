@@ -3,7 +3,6 @@
     name: vault
     state: stop
     enabled: yes
-   when: vault_init_status.stdout  == "Vault is initialized"
 
 - name: Ansible delete file glob
   find:
