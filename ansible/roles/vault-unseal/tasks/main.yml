@@ -8,5 +8,5 @@
   ansible.builtin.shell: |
     vault operator unseal {{ item }}
   environment:
-    VAULT_ADDR: "{{ vault_address }}"
+    VAULT_ADDR: "{{ vault_address }}:{{ vault_port }}"
   with_items: "{{ unseal_keys }}"

@@ -28,7 +28,7 @@
     owner: "{{ vault_user }}"
     group: "{{ vault_group }}"
     mode: 0755
-    checksum: "{{vault_checksum}}"
+    checksum: "{{ vault_checksum }}"
   register: vault_download
 
 - name: "Unzip vault archive"

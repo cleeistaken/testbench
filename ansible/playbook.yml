@@ -1,4 +1,26 @@
 ---
+- name: Setup Hashicorp Terraform
+  hosts: localhost
+  connection: local
+  any_errors_fatal: true
+  roles:
+    - terraform
+
+- name: Setup Hashicorp Vault
+  hosts: localhost
+  connection: local
+  any_errors_fatal: true
+  roles:
+    - vault
+
+- name: Initialize Hashicorp Vault
+  hosts: localhost
+  connection: local
+  any_errors_fatal: true
+  roles:
+    - vault-init
+    - vault-unseal
+
 - name: Configure the local system
   hosts: localhost
   connection: local
@@ -139,18 +161,4 @@
         group: root
         mode: '0444'
       loop: "{{ centos_dlm_files }}"
- 
-- name: Setup Hashicorp Vault
-  hosts: localhost
-  connection: local
-  any_errors_fatal: true
-  roles:
-    - vault
 
-- name: Initialize Hashicorp Vault
-  hosts: localhost
-  connection: local
-  any_errors_fatal: true
-  roles:
-    - vault-init
-    - vault-unseal

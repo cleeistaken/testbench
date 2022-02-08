@@ -13,7 +13,7 @@
 - name: Get vault status
   ansible.builtin.shell: vault operator init -status
   environment:
-    VAULT_ADDR: "http://127.0.0.1:8200"
+    VAULT_ADDR: "{{ vault_address }}:{{ vault_port }}"
   register: vault_init_status
   failed_when: vault_init_status.rc not in [ 0, 2 ]
 
@@ -25,7 +25,7 @@
   ansible.builtin.shell: |
     vault operator init -key-shares=5 -key-threshold=3 -format json
   environment:
-    VAULT_ADDR: "http://127.0.0.1:8200"
+    VAULT_ADDR: "{{ vault_address }}:{{ vault_port }}"
   register: vault_init_results
 
 - name: Parse output of vault init

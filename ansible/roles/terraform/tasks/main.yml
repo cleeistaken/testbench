@@ -1,0 +1,26 @@
+---
+- name: Install prerequisites
+  package:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items: "{{ tf_install_prerequisites }}"
+  become: yes
+
+- name: Download binary
+  get_url:
+    url: "https://releases.hashicorp.com/terraform/{{ tf_version }}/terraform_{{ tf_version }}_linux_amd64.zip"
+    dest: "{{ folder_tmp }}/terraform_{{ tf_version }}_linux_amd64.zip"
+    owner: "{{ tf_user }}"
+    group: "{{ tf_group }}"
+    mode: 0755
+    checksum: "{{ tf_checksum }}"
+  register: tf_download
+
+- name: "Unzip terraform archive"
+  unarchive:
+    src: "{{ tf_download.dest }}"
+    dest: "{{ tf_binary_folder }}"
+    copy: no
+    owner: "{{ tf_user }}"
+    group: "{{ tf_group }}"
+    mode: 0755

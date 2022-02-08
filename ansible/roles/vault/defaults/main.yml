@@ -11,6 +11,8 @@ vault_config_folder: /etc/vault.d
 vault_data_folder: /opt/vault
 vault_user: vault
 vault_group: vault
+vault_address: "http://127.0.0.1"
+vault_port: 8200
 
 folder_tmp: /tmp
 folder_systemd: /etc/systemd/system
