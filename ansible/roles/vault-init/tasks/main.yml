@@ -21,14 +21,14 @@
   environment:
     VAULT_ADDR: "http://127.0.0.1:8200"
   register: vault_init_results
-  when: vault_init_status != "Vault is initialized"
+  when: vault_init_status.stdout != "Vault is initialized"
 
 - name: Re-initialize Vault operator
   ansible.builtin.shell: vault operator rekey -init -key-shares=5 -key-threshold=2  -format json
   environment:
     VAULT_ADDR: "http://127.0.0.1:8200"
   register: vault_init_results
-  when: vault_init_status == "Vault is initialized"
+  when: vault_init_status.stdout  == "Vault is initialized"
 
 - name: Parse output of vault init
   set_fact:
