@@ -8,6 +8,7 @@ vault_service: vault.service
 vault_config_template: vault.hcl.j2
 vault_config: vault.hcl
 vault_config_folder: /etc/vault.d
+vault_data_folder: /opt/vault
 vault_user: vault
 vault_group: vault
 

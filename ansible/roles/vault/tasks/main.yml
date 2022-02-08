@@ -40,7 +40,7 @@
     group: "{{ vault_group }}"
     mode: 0755
 
-- name: Set vault  capabilities
+- name: Set vault capabilities
   community.general.capabilities:
     path: "{{ vault_binary_folder }}/{{ vault_binary }}"
     capability: cap_ipc_lock=ep
@@ -57,6 +57,13 @@
 - name: Create vault settings folder
   ansible.builtin.file:
     path: "{{ vault_config_folder }}"
+    state: directory
+    owner: root
+    group: root
+
+- name: Creat vault data folder
+  ansible.builtin.file:
+    path: "{{ vault_data_folder }}"
     state: directory
     owner: root
     group: root
