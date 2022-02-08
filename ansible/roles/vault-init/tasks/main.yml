@@ -50,6 +50,11 @@
   with_fileglob: "{{ unseal_keys_dir_output }}/*"
   delegate_to: localhost
 
+- name: Foo
+  debug:
+    msg: "{{ item.stdout }}"
+  with_items: "{{ unseal_keys.results }}"
+
 - name: Unseal vault with unseal keys
   shell: |
     vault operator unseal {{ item.stdout }}
