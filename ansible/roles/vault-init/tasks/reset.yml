@@ -1,0 +1,24 @@
+- name: Stop Vault
+  ansible.builtin.systemd:
+    name: vault
+    state: stop
+    enabled: yes
+   when: vault_init_status.stdout  == "Vault is initialized"
+
+- name: Ansible delete file glob
+  find:
+    paths: "{{ vault_data_folder }}/data"
+    patterns: *
+  register: files_to_delete
+
+- name: Ansible remove file glob
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ files_to_delete.files }}"
+
+- name: Start Vault
+  ansible.builtin.systemd:
+    name: vault
+    state: start
+    enabled: yes
