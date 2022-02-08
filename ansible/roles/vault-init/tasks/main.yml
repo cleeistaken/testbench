@@ -10,11 +10,25 @@
     state: directory
   delegate_to: localhost
 
+- name: Get vault status
+  ansible.builtin.shell: vault operator init -status
+  environment:
+    VAULT_ADDR: "http://127.0.0.1:8200"
+  register: vault_init_status
+
 - name: Initialise Vault operator
-  shell: vault operator init -key-shares=5 -key-threshold=3 -format json
+  ansible.builtin.shell: vault operator init -key-shares=5 -key-threshold=3 -format json
   environment:
     VAULT_ADDR: "http://127.0.0.1:8200"
   register: vault_init_results
+  when: vault_init_status != "Vault is initialized"
+
+- name: Re-initialize Vault operator
+  ansible.builtin.shell: vault operator rekey -init -key-shares=5 -key-threshold=2  -format json
+  environment:
+    VAULT_ADDR: "http://127.0.0.1:8200"
+  register: vault_init_results
+  when: vault_init_status == "Vault is initialized"
 
 - name: Parse output of vault init
   set_fact:
