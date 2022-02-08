@@ -65,8 +65,8 @@
   ansible.builtin.file:
     path: "{{ vault_data_folder }}"
     state: directory
-    owner: root
-    group: root
+    owner: "{{ vault_user }}"
+    group: "{{ vault_group }}"
 
 - name: Copy config file
   ansible.builtin.template:
