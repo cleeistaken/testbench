@@ -47,12 +47,12 @@
     state: present
 
 - name: Create systemd service
-    ansible.builtin.template:
-      src: "{{ vault_service_template }}"
-      dest: "{{ folder_systemd }}/{{ vault_service }}"
-      owner: root
-      group: root
-    notify: systemd_reload
+  ansible.builtin.template:
+    src: "{{ vault_service_template }}"
+    dest: "{{ folder_systemd }}/{{ vault_service }}"
+    owner: root
+    group: root
+  notify: systemd_reload
 
 - name: Create vault settings folder
   ansible.builtin.file:
