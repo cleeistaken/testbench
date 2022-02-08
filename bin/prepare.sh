@@ -8,6 +8,7 @@
 OVFCONF_RAN="/etc/ovfconf"
 SSH_KNOWN_HOSTS_FILE="/root/.ssh/known_hosts"
 BASH_HISTORY_FILE="/root/.bash_history"
+GITCONFIG_FILE="/root/.gitconfig"
 
 #
 # VMware KB 82228
@@ -30,6 +31,12 @@ fi
 if [ -f ${SSH_KNOWN_HOSTS_FILE} ]; then
   echo "Deleting known hosts"
   rm -f "${SSH_KNOWN_HOSTS_FILE}"
+fi
+
+# Gitconfig
+if [ -f ${GITCONFIG_FILE} ]; then
+  echo "Deleting gitconfig"
+  rm -f "${GITCONFIG_FILE}"
 fi
 
 # Clean repository
