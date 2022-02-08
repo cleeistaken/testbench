@@ -15,7 +15,7 @@
   environment:
     VAULT_ADDR: "http://127.0.0.1:8200"
   register: vault_init_status
-  failed_when: result.rc not in [ 0, 2 ]
+  failed_when: vault_init_status.rc not in [ 0, 2 ]
 
 - name: Reset Vault
   include_tasks: reset.yml
