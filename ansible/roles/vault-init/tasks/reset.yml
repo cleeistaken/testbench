@@ -1,7 +1,7 @@
 - name: Stop Vault
   ansible.builtin.systemd:
     name: vault
-    state: stop
+    state: stopped
     enabled: yes
 
 - name: Ansible delete file glob
@@ -18,5 +18,5 @@
 - name: Start Vault
   ansible.builtin.systemd:
     name: vault
-    state: start
+    state: started
     enabled: yes
