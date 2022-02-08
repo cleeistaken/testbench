@@ -4,12 +4,14 @@
     state: stopped
     enabled: yes
 
-- name: Ansible delete file glob
+- name: Find all files
   ansible.builtin.find:
     paths: "{{ vault_data_folder }}/data"
+    use_regex: no
+    patterns: "*"
   register: files_to_delete
 
-- name: Ansible remove file glob
+- name: Remove file glob
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: absent
