@@ -7,6 +7,7 @@
 - name: Find all files
   ansible.builtin.find:
     paths: "{{ vault_data_folder }}/data"
+    recurse: yes
     use_regex: no
     patterns: "*"
   register: files_to_delete
