@@ -19,9 +19,9 @@
   no_log: true
   with_items: "{{ files_to_delete.files }}"
 
-
 - name: Start Vault
   ansible.builtin.systemd:
     name: vault
     state: started
     enabled: yes
+
