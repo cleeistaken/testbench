@@ -51,10 +51,6 @@
   with_fileglob: "{{ unseal_keys_dir_output }}/*"
   delegate_to: localhost
 
-- name: Foo
-  debug:
-    var: unseal_keys
-
 - name: Unseal vault with unseal keys
   ansible.builtin.shell: |
     vault operator unseal {{ item }}
