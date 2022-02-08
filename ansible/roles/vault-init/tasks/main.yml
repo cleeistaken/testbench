@@ -45,15 +45,3 @@
     dest: "{{ root_token_dir_output }}/rootkey"
   delegate_to: localhost
 
-- name: Reading unseal key contents
-  set_fact:
-    unseal_keys: "{{ unseal_keys | default([]) + [ lookup('file', item) ] }}"
-  with_fileglob: "{{ unseal_keys_dir_output }}/*"
-  delegate_to: localhost
-
-- name: Unseal vault with unseal keys
-  ansible.builtin.shell: |
-    vault operator unseal {{ item }}
-  environment:
-    VAULT_ADDR: "http://127.0.0.1:8200"
-  with_items: "{{ unseal_keys }}"

@@ -153,3 +153,4 @@
   any_errors_fatal: true
   roles:
     - vault-init
+    - vault-unseal

@@ -1,0 +1,12 @@
+- name: Reading unseal key contents
+  set_fact:
+    unseal_keys: "{{ unseal_keys | default([]) + [ lookup('file', item) ] }}"
+  with_fileglob: "{{ unseal_keys_dir_output }}/*"
+  delegate_to: localhost
+
+- name: Unseal vault with unseal keys
+  ansible.builtin.shell: |
+    vault operator unseal {{ item }}
+  environment:
+    VAULT_ADDR: "{{ vault_address }}"
+  with_items: "{{ unseal_keys }}"
