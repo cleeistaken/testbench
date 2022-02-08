@@ -5,13 +5,12 @@
     enabled: yes
 
 - name: Ansible delete file glob
-  find:
+  ansible.builtin.find:
     paths: "{{ vault_data_folder }}/data"
-    patterns: *
   register: files_to_delete
 
 - name: Ansible remove file glob
-  file:
+  ansible.builtin.file:
     path: "{{ item.path }}"
     state: absent
   with_items: "{{ files_to_delete.files }}"

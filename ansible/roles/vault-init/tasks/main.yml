@@ -1,11 +1,11 @@
 - name: Create unseal directories
-  file:
+  ansible.builtin.file:
     path: "{{ unseal_keys_dir_output }}"
     state: directory
   delegate_to: localhost
 
 - name: Create root key directories
-  file:
+  ansible.builtin.file:
     path: "{{ root_token_dir_output }}"
     state: directory
   delegate_to: localhost
