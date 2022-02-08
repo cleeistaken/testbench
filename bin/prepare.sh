@@ -14,8 +14,11 @@ BASH_HISTORY_FILE="~/.bash_history"
 #
 echo "Resetting the machine ID"
 echo -n > /etc/machine-id
-rm /var/lib/dbus/machine-id
-ln -s /etc/machine-id /var/lib/dbus/machine-id
+if [ -f /var/lib/dbus/machine-id ]; then
+  echo "Reset the dbus machine-id"
+  rm -f /var/lib/dbus/machine-id
+  ln -s /etc/machine-id /var/lib/dbus/machine-id
+fi
 
 # Bash history
 if [ -f "${BASH_HISTORY_FILE}" ]; then

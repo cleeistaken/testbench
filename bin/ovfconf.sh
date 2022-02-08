@@ -48,7 +48,7 @@ if [ "${OVF_NET_CONF_TYPE}" == "Static" ]; then
   echo "IPv4 DNS1: ${OVF_NET_IPV4_DNS1}"
   echo "IPv4 DNS2: ${OVF_NET_IPV4_DNS2}"
   echo "IPv4 CIDR: ${OVF_NET_IPV4_CIDR}"
-  nmcli connection modify "${NETWORK_INTERFACE}" ipv4.addresses "${OVF_NET_IPV4_ADDRESS}/${OVF_NET_IPV4_CIDR}"
+  nmcli connection modify "${NETWORK_INTERFACE}" ipv4.address "${OVF_NET_IPV4_ADDRESS}/${OVF_NET_IPV4_CIDR}"
   nmcli connection modify "${NETWORK_INTERFACE}" ipv4.gateway "${OVF_NET_IPV4_GATEWAY}"
   nmcli connection modify "${NETWORK_INTERFACE}" ipv4.dns "${OVF_NET_IPV4_DNS1} ${OVF_NET_IPV4_DNS2}"
   nmcli connection modify "${NETWORK_INTERFACE}" ipv4.method manual
@@ -59,10 +59,12 @@ else
 
   # DHCP
   echo "IPv4 DHCP configuration"
-  nmcli device modify "${NETWORK_INTERFACE}" ipv4.method auto
+  nmcli connection modify "${NETWORK_INTERFACE}" ipv4.method auto
+  nmcli connection modify "${NETWORK_INTERFACE}" ipv4.gateway ""
+  nmcli connection modify "${NETWORK_INTERFACE}" ipv4.address "" 
+  nmcli connection modify "${NETWORK_INTERFACE}" ipv4.dns ""
   nmcli connection down "${NETWORK_INTERFACE}"
   nmcli connection up "${NETWORK_INTERFACE}"
-   
 fi
 
 
