@@ -16,7 +16,9 @@
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: absent
+  no_log: true
   with_items: "{{ files_to_delete.files }}"
+
 
 - name: Start Vault
   ansible.builtin.systemd:
