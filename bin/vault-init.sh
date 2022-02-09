@@ -5,7 +5,7 @@
 FORCE='false'
 
 # Process all options supplied on the command line
-while getopts ':x' 'OPTKEY'; do
+while getopts ':f' 'OPTKEY'; do
     case ${OPTKEY} in
         'f')
             # Update the value of the option x flag we defined above
