@@ -83,7 +83,7 @@
 
 - name: Permit TCP traffic on configured vault ports
   ansible.posix.firewalld:
-    port: "{{ item }}"/tcp
+    port: "{{ item }}/tcp"
     permanent: yes
     immediate: yes
     state: enabled
