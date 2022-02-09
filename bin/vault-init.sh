@@ -38,7 +38,7 @@ else
 fi
 
 pushd ../ansible > /dev/null
-  # Configure the systems
+  echo "Initializing Hashicorp Vault keys"
   ANSIBLE_LOCALHOST_WARNING=false
   export ANSIBLE_LOCALHOST_WARNING
   ansible-playbook vault-init.yml
