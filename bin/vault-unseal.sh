@@ -9,7 +9,9 @@ done
 
 echo "This script will unseal the Hashicorp Vault."
 
-if [ -z ${FORCE+x} ]; then
+if [ "$FORCE" == true ]; then
+  echo "Skipping user prompt: '-f' flag set."
+else
   read -p "Are you sure? " -n 1 -r
   echo    # (optional) move to a new line
   if [[ ! $REPLY =~ ^[Yy]$ ]]
@@ -17,8 +19,6 @@ if [ -z ${FORCE+x} ]; then
     echo "Exiting."
     exit
   fi
-else
-  echo "Skipping user prompt: '-f' flag set."
 fi
 
 pushd ../ansible > /dev/null
