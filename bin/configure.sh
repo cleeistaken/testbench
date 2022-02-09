@@ -16,7 +16,9 @@ python3 -m pip install wheel ansible jmespath netaddr
 # Invoke Ansible host configuration
 pushd ../ansible > /dev/null
   echo "Running ansible host configuration"
-  ./run.sh
+  ANSIBLE_LOCALHOST_WARNING=false
+  export ANSIBLE_LOCALHOST_WARNING
+  ansible-playbook playbook.yml
 popd > /dev/null
 
 echo "Done."
