@@ -1,7 +1,10 @@
 #! /bin/bash
 
 # This script will build and install Pythion 3.x on
-# a Centos 8 system
+# a Centos 8 system.
+# Note: The prefered method is to use the package manager unless the version
+# available isn't adequate.
+
 
 VERSION=3.10.1
 VERSION_SHORT="${VERSION%.*}"

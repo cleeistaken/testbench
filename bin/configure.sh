@@ -1,9 +1,5 @@
 #! /bin/bash
 
-# Install Terraform
-echo "Installing Terraform"
-./install_terraform.sh
-
 # Install Python
 echo "Installing Python3"
 yum -y install python3 python3-pip
@@ -15,10 +11,13 @@ python3 -m pip install --upgrade setuptools
 
 # Install required packages"
 echo "Installing required packages"
-pip install wheel ansible jmespath netaddr
+python3 -m pip install wheel ansible jmespath netaddr
 
-# Configure the systems
+# Invoke Ansible host configuration
 pushd ../ansible > /dev/null
+  echo "Running ansible host configuration"
   ./run.sh
 popd > /dev/null
+
 echo "Done."
+
