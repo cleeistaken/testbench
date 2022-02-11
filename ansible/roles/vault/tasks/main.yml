@@ -82,6 +82,8 @@
     owner: "{{ vault_user }}"
     group: "{{ vault_group }}"
 
+# https://docs.ansible.com/ansible/latest/collections/community/crypto/docsite/guide_ownca.html
+# https://docs.ansible.com/ansible/latest/collections/community/crypto/openssl_privatekey_module.html
 - name: Create private key with password protection
   community.crypto.openssl_privatekey:
     path: "{{ vault_config_folder }}/certs/vault_ca.key"
@@ -105,11 +107,9 @@
   community.crypto.x509_certificate:
     path: "{{ vault_config_folder }}/certs/vault_ca.crt"
     csr_content: "{{ vault_ca_csr.csr }}"
-    privatekey_path: /path/to/ca-certificate.key
+    privatekey_path: "{{ vault_config_folder }}/certs/vault_ca.key"
     provider: selfsigned
 
-
-# https://docs.ansible.com/ansible/latest/collections/community/crypto/openssl_privatekey_module.html
 - name: Generate an OpenSSL private key
   community.crypto.openssl_privatekey:
     path: "{{ vault_config_folder }}/certs/vault.key"
