@@ -20,8 +20,14 @@
   tags:
     - setup
 
+- name: Reset vault
+  include_tasks: init.yml
+  tags:
+    - setup
+    - init
+
 - name: Initialize vault
-  include_tasks: unseal.yml
+  include_tasks: init.yml
   tags:
     - setup
     - init
