@@ -22,3 +22,4 @@ vault_ssl_cert_server_hostname: localhost
 
 folder_tmp: /tmp
 folder_systemd: /etc/systemd/system
+pki_ca_trust_source: /etc/pki/ca-trust/source/anchors

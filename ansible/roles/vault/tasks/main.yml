@@ -110,6 +110,17 @@
     privatekey_path: "{{ vault_config_folder }}/certs/vault_ca.key"
     provider: selfsigned
 
+- name: Copy Vault CA cert to trusted root certs
+  ansible.builtin.copy:
+    src: "{{ vault_config_folder }}/certs/vault_ca.crt"
+    dest: "{{ pki_ca_trust_source }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Update trusted CA certs
+  shell: "update-ca-trust; update-ca-trust extract"
+
 - name: Generate an OpenSSL private key
   community.crypto.openssl_privatekey:
     path: "{{ vault_config_folder }}/certs/vault.key"
