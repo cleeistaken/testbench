@@ -127,9 +127,6 @@
     email_address: "{{ vault_ssl_cert_email_address }}"
     common_name: "{{ vault_ssl_cert_server_hostname }}"
     subject_alt_name: "DNS:localhost,IP:127.0.0.1"
-    owner: "{{ vault_user }}"
-    group: "{{ vault_group }}"
-    mode: '0440'
   register: vault_csr
 
 - name: Generate a Self Signed OpenSSL certificate
