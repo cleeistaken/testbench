@@ -1,6 +1,0 @@
-vault_config_folder: /etc/vault.d
-vault_keys_folder: unsealKey
-vault_root_token_folder: rootKey
-vault_address: "https://127.0.0.1"
-vault_port: 8200
-vault_data_folder: /opt/vault

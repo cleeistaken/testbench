@@ -88,7 +88,7 @@
     group: "{{ vault_group }}"
     mode: '0444'
 
-- name: Stop Vault
+- name: Start Vault
   ansible.builtin.systemd:
     name: vault
     state: started

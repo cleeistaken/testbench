@@ -13,14 +13,6 @@
   roles:
     - vault
 
-- name: Initialize Hashicorp Vault
-  hosts: localhost
-  connection: local
-  any_errors_fatal: true
-  roles:
-    - vault-init
-    - vault-unseal
-
 - name: Configure the local system
   hosts: localhost
   connection: local

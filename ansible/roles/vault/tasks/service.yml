@@ -1,0 +1,14 @@
+- name: Start and enable vault service
+  ansible.builtin.systemd:
+    name: vault
+    state: started
+    enabled: yes
+
+- name: Permit TCP traffic on configured vault ports
+  ansible.posix.firewalld:
+    port: "{{ item }}/tcp"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  with_items:
+   - "{{ vault_port }}"

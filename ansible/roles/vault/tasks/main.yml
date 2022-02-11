@@ -1,94 +1,33 @@
 ---
-- name: "Creating vault user group '{{ vault_group }}'"
-  ansible.builtin.group:
-    name: "{{ vault_group }}"
-  become: true
+- name: Prerequisites
+  import_tasks: prerequisites.yml
+  tags:
+    - setup
 
-- name: "Creating vault user '{{ vault_user }}'"
-  ansible.builtin.user:
-    name: "{{ vault_user }}"
-    group: "{{ vault_group }}"
-    system: yes
-    shell: /sbin/nologin
-    comment: "vault nologin User"
-    createhome: "no"
-    state: present
-
-- name: Install prerequisites
-  package:
-    name: "{{ item }}"
-    update_cache: yes
-  with_items: "{{ vault_install_prerequisites }}"
-  become: yes
-
-- name: Download binary
-  ansible.builtin.get_url:
-    url: "https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip"
-    dest: "{{ folder_tmp }}/vault_{{ vault_version }}_linux_amd64.zip"
-    owner: "{{ vault_user }}"
-    group: "{{ vault_group }}"
-    mode: 0755
-    checksum: "{{ vault_checksum }}"
-  register: vault_download
-
-- name: "Unzip vault archive"
-  ansible.builtin.unarchive:
-    src: "{{ vault_download.dest }}"
-    dest: "{{ vault_binary_folder }}"
-    copy: no
-    owner: "{{ vault_user }}"
-    group: "{{ vault_group }}"
-    mode: 0755
-
-- name: Set vault capabilities
-  community.general.capabilities:
-    path: "{{ vault_binary_folder }}/{{ vault_binary }}"
-    capability: cap_ipc_lock=ep
-    state: present
-
-- name: Create systemd service
-  ansible.builtin.template:
-    src: "{{ vault_service_template }}"
-    dest: "{{ folder_systemd }}/{{ vault_service }}"
-    owner: root
-    group: root
-  notify: systemd_reload
-
-- name: Create vault settings folder
-  ansible.builtin.file:
-    path: "{{ vault_config_folder }}"
-    state: directory
-    owner: root
-    group: root
-
-- name: Create vault data folder
-  ansible.builtin.file:
-    path: "{{ vault_data_folder }}"
-    state: directory
-    owner: "{{ vault_user }}"
-    group: "{{ vault_group }}"
-
-- name: Copy config file
-  ansible.builtin.template:
-    src: "{{ vault_config_template }}"
-    dest: "{{ vault_config_folder }}/{{ vault_config }}"
-    owner: "{{ vault_user }}"
-    group: "{{ vault_group }}"
+- name: Install
+  import_tasks: prerequisites.yml
+  tags:
+    - setup
 
 - name: Generate certificates
-  include_tasks: generate-certs.yml
+  import_tasks: generate-certs.yml
+  tags:
+    - setup
+    - certificates
 
-- name: Start and enable vault service
-  ansible.builtin.systemd:
-    name: vault
-    state: started
-    enabled: yes
+- name: Create service
+  import_tasks: service.yml
+  tags:
+    - setup
 
-- name: Permit TCP traffic on configured vault ports
-  ansible.posix.firewalld:
-    port: "{{ item }}/tcp"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  with_items:
-   - "{{ vault_port }}"
+- name: Initialize vault
+  import_tasks: unseal.yml
+  tags:
+    - setup
+    - init
+
+- name: Unseal vault
+  import_tasks: unseal.yml
+  tags:
+    - setup
+    - unseal

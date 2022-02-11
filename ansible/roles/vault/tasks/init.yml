@@ -1,26 +1,3 @@
-- name: Create unseal directories
-  ansible.builtin.file:
-    path: "{{ vault_config_folder }}/{{ vault_keys_folder }}"
-    state: directory
-  delegate_to: localhost
-
-- name: Create root key directories
-  ansible.builtin.file:
-    path: "{{ vault_config_folder }}/{{ vault_root_token_folder }}"
-    state: directory
-  delegate_to: localhost
-
-- name: Get vault status
-  ansible.builtin.shell: vault operator init -status
-  environment:
-    VAULT_ADDR: "{{ vault_address }}:{{ vault_port }}"
-  register: vault_init_status
-  failed_when: vault_init_status.rc not in [ 0, 2 ]
-
-- name: Reset Vault
-  include_tasks: reset.yml
-  when: vault_init_status.stdout == "Vault is initialized"
-
 - name: Vault operator init
   ansible.builtin.shell: |
     vault operator init -key-shares=5 -key-threshold=3 -format json
@@ -50,4 +27,3 @@
     group: root
     mode: '0400'
   delegate_to: localhost
-
