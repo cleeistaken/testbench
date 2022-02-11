@@ -21,7 +21,7 @@
     - setup
 
 - name: Reset vault
-  include_tasks: init.yml
+  include_tasks: reset.yml
   tags:
     - setup
     - init
