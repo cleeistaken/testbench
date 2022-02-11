@@ -11,7 +11,7 @@ vault_config_folder: /etc/vault.d
 vault_data_folder: /opt/vault
 vault_user: vault
 vault_group: vault
-vault_address: "http://127.0.0.1"
+vault_address: "https://127.0.0.1"
 vault_port: 8200
 vault_ssl_key_size: 4096
 vault_ssl_key_type: RSA # Others include DSA, ECC, Ed25519, Ed448, X25519, X448
