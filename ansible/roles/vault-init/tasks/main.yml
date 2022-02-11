@@ -6,7 +6,7 @@
 
 - name: Create root key directories
   ansible.builtin.file:
-    path: "{{ vault_config_folder }}/{{ rootKey }}"
+    path: "{{ vault_config_folder }}/{{ vault_root_token_folder }}"
     state: directory
   delegate_to: localhost
 
