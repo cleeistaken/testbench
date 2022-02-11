@@ -15,7 +15,7 @@
     state: stopped
     enabled: yes
   register: service_stopped
-  when: 'vault' in ansible_facts.services
+  when: ansible_facts.services["vault.service"] is defined
 
 # https://docs.ansible.com/ansible/latest/collections/community/crypto/docsite/guide_ownca.html
 # https://docs.ansible.com/ansible/latest/collections/community/crypto/openssl_privatekey_module.html
