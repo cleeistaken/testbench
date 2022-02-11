@@ -24,6 +24,9 @@
     path: "{{ vault_config_folder }}/certs/vault_ca.key"
     size: "{{ vault_ssl_key_size }}"
     type: "{{ vault_ssl_key_type }}"
+    owner: root
+    group: root
+    mode: '0440'
     force: yes
 
 - name: Create certificate signing request (CSR) for CA certificate
@@ -45,6 +48,9 @@
     csr_content: "{{ vault_ca_csr.csr }}"
     privatekey_path: "{{ vault_config_folder }}/certs/vault_ca.key"
     provider: selfsigned
+    owner: root
+    group: root
+    mode: '0444'
     force: yes
 
 - name: Copy Vault CA cert to trusted root certs
@@ -53,7 +59,7 @@
     dest: "{{ pki_ca_trust_source }}"
     owner: root
     group: root
-    mode: '0644'
+    mode: '0444'
 
 - name: Update trusted CA certs
   shell: "update-ca-trust; update-ca-trust extract"
