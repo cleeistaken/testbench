@@ -61,6 +61,13 @@
     owner: root
     group: root
 
+- name: Create vault certs folder
+  ansible.builtin.file:
+    path: "{{ vault_config_folder }}/certs"
+    state: directory
+    owner: root
+    group: root
+
 - name: Create vault data folder
   ansible.builtin.file:
     path: "{{ vault_data_folder }}"
