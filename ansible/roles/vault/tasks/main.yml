@@ -82,6 +82,33 @@
     owner: "{{ vault_user }}"
     group: "{{ vault_group }}"
 
+- name: Create private key with password protection
+  community.crypto.openssl_privatekey:
+    path: "{{ vault_config_folder }}/certs/vault_ca.key"
+    size: "{{ vault_ssl_key_size }}"
+    type: "{{ vault_ssl_key_type }}"
+
+- name: Create certificate signing request (CSR) for CA certificate
+  community.crypto.openssl_csr_pipe:
+    privatekey_path: "{{ vault_config_folder }}/certs/vault_ca.key"
+    common_name: Vault CA
+    use_common_name_for_san: false  # since we do not specify SANs, don't use CN as a SAN
+    basic_constraints:
+      - 'CA:TRUE'
+    basic_constraints_critical: yes
+    key_usage:
+      - keyCertSign
+    key_usage_critical: true
+  register: vault_ca_csr
+
+- name: Create self-signed CA certificate from CSR
+  community.crypto.x509_certificate:
+    path: "{{ vault_config_folder }}/certs/vault_ca.crt"
+    csr_content: "{{ vault_ca_csr.csr }}"
+    privatekey_path: /path/to/ca-certificate.key
+    provider: selfsigned
+
+
 # https://docs.ansible.com/ansible/latest/collections/community/crypto/openssl_privatekey_module.html
 - name: Generate an OpenSSL private key
   community.crypto.openssl_privatekey:
@@ -93,8 +120,7 @@
     mode: '0440'
 
 - name: Generate an OpenSSL Certificate Signing Request with Subject information
-  community.crypto.openssl_csr:
-    path: "{{ vault_config_folder }}/certs/vault.csr"
+  community.crypto.openssl_csr_pipe:
     privatekey_path: "{{ vault_config_folder }}/certs/vault.key"
     country_name: "{{ vault_ssl_cert_country_name }}"
     organization_name: "{{ vault_ssl_cert_organization_name }}"
@@ -104,16 +130,20 @@
     owner: "{{ vault_user }}"
     group: "{{ vault_group }}"
     mode: '0440'
+  register: vault_csr
 
 - name: Generate a Self Signed OpenSSL certificate
   community.crypto.x509_certificate:
     path: "{{ vault_config_folder }}/certs/vault.crt"
-    privatekey_path: "{{ vault_config_folder }}/certs/vault.key"
-    csr_path: "{{ vault_config_folder }}/certs/vault.csr"
-    provider: selfsigned
+    csr_content: "{{ vault_csr.csr }}"
+    provider: ownca
+    ownca_path: /path/to/ca-certificate.pem
+    ownca_privatekey_path: "{{ vault_config_folder }}/certs/vault_ca.key"
+    ownca_not_after: +365d  # valid for one year
+    ownca_not_before: "-1d"  # valid since yesterday
     owner: "{{ vault_user }}"
     group: "{{ vault_group }}"
-    mode: '0440'
+    mode: '0444'
 
 - name: Start and enable vault service
   ansible.builtin.systemd:
