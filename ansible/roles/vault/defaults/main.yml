@@ -13,6 +13,12 @@ vault_user: vault
 vault_group: vault
 vault_address: "http://127.0.0.1"
 vault_port: 8200
+vault_ssl_key_size: 4096
+vault_ssl_key_type: RSA # Others include DSA, ECC, Ed25519, Ed448, X25519, X448
+vault_ssl_cert_country_name: US
+vault_ssl_cert_organization_name: VMware Inc.
+vault_ssl_cert_email_address: root@localhost
+vault_ssl_cert_server_hostname: localhost
 
 folder_tmp: /tmp
 folder_systemd: /etc/systemd/system

@@ -1,4 +1,4 @@
-# Enable the HTTP/HTTPS User Interface
+# Enable the HTTP/HTTPS
 ui = true
 
 storage "file" {
@@ -7,7 +7,8 @@ storage "file" {
 
 listener "tcp" {
   address     = "0.0.0.0:{{ vault_port }}"
-  tls_disable = 1
+  tls_cert_file = "{{ vault_config_folder }}/certs/vault.crt"
+  tls_key_file  = "{{ vault_config_folder }}/certs/vault.key"
 }
 
 api_addr = "{{ vault_address }}:{{ vault_port }}"
