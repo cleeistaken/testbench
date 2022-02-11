@@ -96,11 +96,12 @@
   community.crypto.openssl_csr:
     path: "{{ vault_config_folder }}/certs/vault.csr"
     privatekey_path: "{{ vault_config_folder }}/certs/vault.key"
+    common_name: vault
     country_name: "{{ vault_ssl_cert_country_name }}"
     organization_name: "{{ vault_ssl_cert_organization_name }}"
     email_address: "{{ vault_ssl_cert_email_address }}"
     common_name: "{{ vault_ssl_cert_server_hostname }}"
-    subject_alt_name: "IP:127.0.0.1,IP:{{ ansible_ens192.ipv4.address }}"
+    subject_alt_name: "IP:127.0.0.1"
     owner: "{{ vault_user }}"
     group: "{{ vault_group }}"
     mode: '0440'
