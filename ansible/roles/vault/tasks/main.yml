@@ -1,33 +1,33 @@
 ---
 - name: Prerequisites
-  import_tasks: prerequisites.yml
+  include_tasks: prerequisites.yml
   tags:
     - setup
 
 - name: Install
-  import_tasks: prerequisites.yml
+  include_tasks: prerequisites.yml
   tags:
     - setup
 
 - name: Generate certificates
-  import_tasks: generate-certs.yml
+  include_tasks: generate-certs.yml
   tags:
     - setup
     - certificates
 
 - name: Create service
-  import_tasks: service.yml
+  include_tasks: service.yml
   tags:
     - setup
 
 - name: Initialize vault
-  import_tasks: unseal.yml
+  include_tasks: unseal.yml
   tags:
     - setup
     - init
 
 - name: Unseal vault
-  import_tasks: unseal.yml
+  include_tasks: unseal.yml
   tags:
     - setup
     - unseal
