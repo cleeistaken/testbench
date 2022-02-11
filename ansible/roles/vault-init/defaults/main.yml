@@ -1,7 +1,6 @@
-unseal_keys_dir_output: "{{ playbook_dir }}/unsealKey"
-root_token_dir_output: "{{ playbook_dir }}/rootKey"
-
+vault_config_folder: /etc/vault.d
+vault_keys_folder: unsealKey
+vault_root_token_folder: rootKey
 vault_address: "http://127.0.0.1"
 vault_port: 8200
-
 vault_data_folder: /opt/vault
