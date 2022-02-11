@@ -134,7 +134,7 @@
     path: "{{ vault_config_folder }}/certs/vault.crt"
     csr_content: "{{ vault_csr.csr }}"
     provider: ownca
-    ownca_path: /path/to/ca-certificate.pem
+    ownca_path: "{{ vault_config_folder }}/certs/vault_ca.crt"
     ownca_privatekey_path: "{{ vault_config_folder }}/certs/vault_ca.key"
     ownca_not_after: +365d  # valid for one year
     ownca_not_before: "-1d"  # valid since yesterday
