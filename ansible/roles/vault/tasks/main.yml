@@ -98,7 +98,7 @@
     mode: '0440'
 
 - name: Generate a Self Signed OpenSSL certificate
-  community.crypto.openssl_certificate:
+  community.crypto.x509_certificate:
     path: "{{ vault_config_folder }}/certs/vault.crt"
     privatekey_path: "{{ vault_config_folder }}/certs/vault.key"
     csr_path: "{{ vault_config_folder }}/certs/vault.csr"
