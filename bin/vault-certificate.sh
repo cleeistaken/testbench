@@ -4,6 +4,9 @@
 
 FORCE='false'
 
+#
+subcommand=$1; shift
+
 # Process all options supplied on the command line
 while getopts ':f' 'OPTKEY'; do
     case ${OPTKEY} in
@@ -18,12 +21,7 @@ while getopts ':f' 'OPTKEY'; do
     esac
 done
 
-# [optional] Remove all options processed by getopts.
-shift $(( OPTIND - 1 ))
-[[ "${1}" == "--" ]] && shift
-
-echo "Warning: This script will reset the Hashicorp Vault tokens."
-echo "All currently stored data in vault will be lost."
+echo "This script will regenerate all certificates used by Hashicorp Vault."
 
 if ${FORCE}; then
   echo "Skipping user prompt: '-f' flag set."
@@ -38,8 +36,8 @@ else
 fi
 
 pushd ../ansible > /dev/null
-  echo "Initializing Hashicorp Vault keys"
+  echo "Unsealing Hashicorp Vault"
   ANSIBLE_LOCALHOST_WARNING=false
   export ANSIBLE_LOCALHOST_WARNING
-  ansible-playbook vault.yml --tags init
+  ansible-playbook vault.yml --tags certificates
 popd > /dev/null

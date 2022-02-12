@@ -1,5 +1,14 @@
 #! /bin/bash
 
+echo "This script will perform the initial deploy and configuration of the system."
+read -p "Are you sure? (y/n)" -n 1 -r
+echo    # (optional) move to a new line
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+  echo "Exiting."
+  exit
+fi
+
 # Install Python
 echo "Installing Python3"
 yum -y install python3 python3-pip
@@ -22,4 +31,3 @@ pushd ../ansible > /dev/null
 popd > /dev/null
 
 echo "Done."
-

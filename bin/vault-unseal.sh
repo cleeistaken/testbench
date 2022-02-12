@@ -36,5 +36,5 @@ pushd ../ansible > /dev/null
   echo "Unsealing Hashicorp Vault"
   ANSIBLE_LOCALHOST_WARNING=false
   export ANSIBLE_LOCALHOST_WARNING
-  ansible-playbook vault-unseal.yml
+  ansible-playbook vault.yml --tags unseal
 popd > /dev/null
